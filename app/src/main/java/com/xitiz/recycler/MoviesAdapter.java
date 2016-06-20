@@ -1,11 +1,17 @@
 package com.xitiz.recycler;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -20,26 +26,53 @@ import java.util.List;
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHolder> {
 
     private List<Movie> moviesList;
+    public MyClicks mClicks;
+    private Context context;
 
     /**
      * A viewHolder for the
      * **/
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public ImageView imageView;
         public TextView title, year, genre;
         public RatingBar ratingBar;
 
-        public MyViewHolder(View view) {
+        public MyViewHolder(View view, MyClicks listener) {
             super(view);
+            mClicks = listener;
+            imageView = (ImageView) view.findViewById(R.id.image);
             title = (TextView) view.findViewById(R.id.title);
             genre = (TextView) view.findViewById(R.id.genre);
             year = (TextView) view.findViewById(R.id.year);
             ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
+            imageView.setOnClickListener(this);
+            view.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v){
+            if(v instanceof ImageView){
+                mClicks.clickOnImage((ImageView) v);
+            } else {
+                mClicks.clickOnRow(v);
+            }
+        }
+
+    }
+
+    /**
+     * Interface for checking the clicks and what to do when different clicks occur.
+     * **/
+
+    public static interface MyClicks{
+        public void clickOnImage(ImageView imgView);
+        public void clickOnRow(View info);
     }
 
 
-    public MoviesAdapter(List<Movie> moviesList) {
+    public MoviesAdapter(List<Movie> moviesList, Context context) {
         this.moviesList = moviesList;
+        this.context = context;
     }
 
     /**
@@ -51,7 +84,21 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.movie_list_row, parent, false);
 
-        return new MyViewHolder(itemView);
+        MoviesAdapter.MyViewHolder myViewHolder = new MyViewHolder(itemView, new MoviesAdapter.MyClicks() {
+            public void clickOnImage(ImageView imgView){
+                Toast.makeText(context,"Image Click",Toast.LENGTH_SHORT).show();
+                Log.d("Rating ","The click works");
+
+
+            }
+
+            public void clickOnRow(View info){
+                Toast.makeText(context,"Whole row clicked",Toast.LENGTH_SHORT).show();
+                Log.d("Movie Adapter","The Second click also works");
+            }
+        });
+
+        return myViewHolder;
     }
 
     /**

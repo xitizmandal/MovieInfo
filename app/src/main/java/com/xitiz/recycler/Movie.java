@@ -13,9 +13,6 @@ public class Movie {
     private String title, genre, year;
     private float rating;
 
-    public Movie() {
-    }
-
     public Movie(String title, String genre, String year, float rating) {
         this.title = title;
         this.genre = genre;

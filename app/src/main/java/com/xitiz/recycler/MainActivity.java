@@ -6,6 +6,10 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
-        mAdapter = new MoviesAdapter(movieList);
+        mAdapter = new MoviesAdapter(movieList, this.getApplicationContext());
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -69,5 +73,32 @@ public class MainActivity extends AppCompatActivity {
 
 
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.about:
+                Toast.makeText(getApplicationContext(),"Recycler View",Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.exit:
+                System.exit(1);
+                return true;
+
+            case R.id.favourite:
+                Toast.makeText(getApplicationContext(),"Favourites view",Toast.LENGTH_SHORT).show();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 }
