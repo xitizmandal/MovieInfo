@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Recycler</string>
+    <string name="add">Ok</string>
 </resources>
