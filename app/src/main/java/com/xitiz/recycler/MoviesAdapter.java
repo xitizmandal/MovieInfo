@@ -54,7 +54,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
         @Override
         public void onClick(View v){
             if(v instanceof ImageView){
-                mClicks.clickOnImage((ImageView) v);
+                mClicks.clickOnImage((ImageView) v, getLayoutPosition());
             } else {
                 mClicks.clickOnRow(v);
             }
@@ -67,7 +67,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
      * **/
 
     public static interface MyClicks{
-        public void clickOnImage(ImageView imgView);
+        public void clickOnImage(ImageView imgView, int pos);
         public void clickOnRow(View info);
     }
 
@@ -87,10 +87,13 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
                 .inflate(R.layout.movie_list_row, parent, false);
 
         MoviesAdapter.MyViewHolder myViewHolder = new MyViewHolder(itemView, new MoviesAdapter.MyClicks() {
-            public void clickOnImage(ImageView imgView){
+
+            public void clickOnImage(ImageView imgView,int pos){
+                Movie movie = moviesList.get(pos);
                 Toast.makeText(context,"Image Click",Toast.LENGTH_SHORT).show();
                 Log.d("Rating ","The click works");
                 Intent intent = new Intent(context,PictureActivity.class);
+                intent.putExtra("imageReference",movie.getImgSrc());
                 context.startActivity(intent);
             }
 
