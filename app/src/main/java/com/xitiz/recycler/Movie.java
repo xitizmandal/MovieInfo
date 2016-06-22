@@ -10,14 +10,24 @@ package com.xitiz.recycler;
  *     Movie movieExample = new Movie("Loot","Comedy","2013")
  */
 public class Movie {
+    private int imgSrc;
     private String title, genre, year;
     private float rating;
 
-    public Movie(String title, String genre, String year, float rating) {
+    public Movie(int imgSrc,String title, String genre, String year, float rating) {
+        this.imgSrc = imgSrc;
         this.title = title;
         this.genre = genre;
         this.year = year;
         this.rating = rating;
+    }
+
+    public int getImgSrc(){
+        return imgSrc;
+    }
+
+    public void setImgSrc(int imgSrc){
+        this.imgSrc = imgSrc;
     }
 
     public String getTitle() {

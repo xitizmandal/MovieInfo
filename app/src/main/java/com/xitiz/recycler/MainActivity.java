@@ -3,6 +3,7 @@ package com.xitiz.recycler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -28,8 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
-        mAdapter = new MoviesAdapter(movieList, this.getApplicationContext());
+        mAdapter = new MoviesAdapter(movieList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),2);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
@@ -38,37 +40,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void prepareMovieData() {
-        Movie movie = new Movie("Loot", "Action, Comedy", "2013", (float) 4.2);
+        Movie movie = new Movie(R.drawable.kabaddi,"Loot", "Action, Comedy", "2013", (float) 4.2);
         movieList.add(movie);
 
-        movie = new Movie("Kabadi", "Love, Comedy", "2014", (float) 4.5);
+        movie = new Movie(R.drawable.kabaddi,"Kabadi", "Love, Comedy", "2014", (float) 4.5);
         movieList.add(movie);
 
-        movie = new Movie("Bhirkhe lai chinchas", "Unknown", "2015", (float) 2);
+        movie = new Movie(R.drawable.warcraft,"Bhirkhe lai chinchas", "Unknown", "2015", (float) 2);
         movieList.add(movie);
 
-        movie = new Movie("Kabadi Kabadi", "Love, Comedy", "2016",(float) 3.8);
+        movie = new Movie(R.drawable.warcraft,"Kabadi Kabadi", "Love, Comedy", "2016",(float) 3.8);
         movieList.add(movie);
 
-        movie = new Movie("6 ekan 6", "Comedy", "2015", (float) 4);
+        movie = new Movie(R.drawable.kabaddi, "6 ekan 6", "Comedy", "2015", (float) 4);
         movieList.add(movie);
 
-        movie = new Movie("Pashupati Prasad", "Serious, Reality", "2016", (float) 4.6);
+        movie = new Movie(R.drawable.warcraft, "Pashupati Prasad", "Serious, Reality", "2016", (float) 4.6);
         movieList.add(movie);
 
-        movie = new Movie("WarCraft", "Animation, Fantasy", "2016", (float) 4.3);
+        movie = new Movie(R.drawable.warcraft, "WarCraft", "Animation, Fantasy", "2016", (float) 4.3);
         movieList.add(movie);
 
-        movie = new Movie("Conjuring 2", "Horror", "2016", (float) 4);
+        movie = new Movie(R.drawable.kabaddi, "Conjuring 2", "Horror", "2016", (float) 4);
         movieList.add(movie);
 
-        movie = new Movie("Minions", "Animation", "2014", (float) 4.4);
+        movie = new Movie(R.drawable.warcraft, "Minions", "Animation", "2014", (float) 4.4);
         movieList.add(movie);
 
-        movie = new Movie("Iron Man", "Action & Adventure", "2008", (float) 3.8);
+        movie = new Movie(R.drawable.kabaddi, "Iron Man", "Action & Adventure", "2008", (float) 3.8);
         movieList.add(movie);
 
-        movie = new Movie("Back to the Future", "Science Fiction", "1985", (float) 4.3);
+        movie = new Movie(R.drawable.warcraft, "Back to the Future", "Science Fiction", "1985", (float) 4.3);
         movieList.add(movie);
 
 
