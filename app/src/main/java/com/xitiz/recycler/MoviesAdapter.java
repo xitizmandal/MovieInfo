@@ -6,6 +6,9 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +34,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
 
     private List<Movie> moviesList;
     public MyClicks mClicks;
+    private MainActivity mActivity;
     private Context context;
 
     /**
@@ -39,6 +44,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
         public ImageView imageView;
         public TextView title, year, genre;
         public RatingBar ratingBar;
+        public RelativeLayout relativeLayout;
+
+
 
         public MyViewHolder(View view, MyClicks listener) {
             super(view);
@@ -49,6 +57,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
             genre = (TextView) view.findViewById(R.id.genre);
             year = (TextView) view.findViewById(R.id.year);
             ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
+            relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
             imageView.setOnClickListener(this);
             view.setOnClickListener(this);
         }
@@ -58,7 +67,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
             if(v instanceof ImageView){
                 mClicks.clickOnImage((ImageView) v, getLayoutPosition());
             } else {
-                mClicks.clickOnRow(v);
+                mClicks.clickOnRow(v, getLayoutPosition());
             }
         }
 
@@ -70,13 +79,13 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
 
     public static interface MyClicks{
         public void clickOnImage(ImageView imgView, int pos);
-        public void clickOnRow(View info);
+        public void clickOnRow(View info, int pos);
     }
 
 
-    public MoviesAdapter(List<Movie> moviesList) {
+    public MoviesAdapter(List<Movie> moviesList,MainActivity activity) {
         this.moviesList = moviesList;
-//        this.context = context;
+        this.mActivity = activity;
     }
 
     /**
@@ -90,18 +99,41 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
 
         MoviesAdapter.MyViewHolder myViewHolder = new MyViewHolder(itemView, new MoviesAdapter.MyClicks() {
 
+            //Clicks for interaction.
             public void clickOnImage(ImageView imgView,int pos){
                 Movie movie = moviesList.get(pos);
                 Toast.makeText(context,"Image Click",Toast.LENGTH_SHORT).show();
                 Log.d("Rating ","The click works");
                 Intent intent = new Intent(context,PictureActivity.class);
-                intent.putExtra("imageReference",movie.getImgSrc());
+//                intent.putExtra(PictureActivity.EXTRA_PARAM_ID, pos);
+                intent.putExtra(PictureActivity.EXTRA_PARAM_IMAGE,movie.getImgSrc())
+                        .putExtra(PictureActivity.EXTRA_PARAM_TITLE,movie.getTitle())
+                        .putExtra(PictureActivity.EXTRA_PARAM_GENRE,movie.getGenre())
+                        .putExtra(PictureActivity.EXTRA_PARAM_YEAR,movie.getYear())
+                        .putExtra(PictureActivity.EXTRA_PARAM_RATING,movie.getRating());
+
                 context.startActivity(intent);
             }
 
-            public void clickOnRow(View info){
+            public void clickOnRow(View info, int pos){
+                Movie movie = moviesList.get(pos);
                 Toast.makeText(context,"Whole row clicked",Toast.LENGTH_SHORT).show();
                 Log.d("Movie Adapter","The Second click also works");
+
+//                mActivity.setCustomBackground(movie.getImgSrc());
+//                mActivity.ImageViewAnimatedChange(movie.getImgSrc());
+                Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),movie.getImgSrc());
+
+        Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                int bgColor = palette.getVibrantColor(context.getResources().getColor(android.R.color.black));
+                mActivity.backgroundTransistion(bgColor);
+
+            }
+        });
+
+
             }
         });
 
@@ -115,13 +147,23 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
      * **/
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
         Movie movie = moviesList.get(position);
         holder.imageView.setImageResource(movie.getImgSrc());
         holder.title.setText(movie.getTitle());
         holder.genre.setText(movie.getGenre());
         holder.year.setText(movie.getYear());
         holder.ratingBar.setRating(movie.getRating());
+
+        /*Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),movie.getImgSrc());
+
+        Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                int bgColor = palette.getLightMutedColor(context.getResources().getColor(android.R.color.black));
+                holder.relativeLayout.setBackgroundColor(bgColor);
+            }
+        });*/
     }
 
 

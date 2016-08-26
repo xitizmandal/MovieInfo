@@ -1,13 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/cdrLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/relativeLayout">
 
-    <ImageView
+    <com.xitiz.recycler.CustomImageView
         android:id="@+id/imageView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_margin="70dp"
-        android:src="@android:drawable/presence_video_online"/>
+        android:layout_width="fill_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentTop="true"/>
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/textHolder"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/imageView"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/songNameTextView"
+            android:layout_margin="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:textSize="32sp"
+            android:text="Song Name"
+            />
+
+        <TextView
+            android:id="@+id/artistNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:textSize="24sp"
+            android:text="Artist Name"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/musicControlPanel"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <ImageButton
+            android:id="@+id/repeatButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/repeat"
+            android:layout_margin= "12dp"
+            android:clickable="true"
+            android:background="@null"
+
+            />
+
+        <android.support.v7.widget.AppCompatSeekBar
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"/>
+
+
+        <ImageButton
+            android:id="@+id/shuffleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/shuffle"
+            android:layout_margin="12dp"
+            android:background="@null"
+            android:clickable="true"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/musicControlPanel"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        >
+
+        <ImageButton
+            android:id="@+id/prevButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="24dp"
+            android:src="@drawable/skip_previous"
+            android:background="@null"
+            android:clickable="true"
+
+            />
+
+        <ImageButton
+            android:id="@+id/playPauseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:src="@drawable/play"
+            android:background="@null"
+            android:clickable="true"
+            />
+        <ImageButton
+            android:id="@+id/nextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:src="@drawable/skip_next"
+            android:background="@null"
+            android:clickable="true"
+            />
+    </LinearLayout>
+
+</RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="170dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:clickable="true"
+        android:src="@drawable/play"
+        app:layout_anchor="@id/imageView"
+        app:layout_anchorGravity="right|end"/>
+    </android.support.design.widget.CoordinatorLayout>

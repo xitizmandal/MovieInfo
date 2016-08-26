@@ -9,7 +9,8 @@
     android:paddingBottom="10dp"
     android:clickable="true"
     android:background="?android:attr/selectableItemBackground"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/relativeLayout">
 
     <ImageView
         android:id="@+id/image"
@@ -57,5 +58,7 @@
         android:numStars="5"
         android:stepSize="0.2"
         android:rating="2.8" />
+
+
 
 </RelativeLayout>
